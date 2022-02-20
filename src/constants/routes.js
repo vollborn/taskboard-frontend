@@ -14,6 +14,7 @@ const ROUTES = {
     SHOW: '/tasks/show',
     STORE: '/tasks',
     UPDATE: '/tasks',
+    UPDATE_STATUS: '/tasks/status',
     DELETE: '/tasks'
   },
   MANAGEMENT: {

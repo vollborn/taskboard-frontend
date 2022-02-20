@@ -13,6 +13,7 @@ export default new Vuetify({
       light: {
         primary: colors.blue.darken3,
         secondary: colors.blue,
+        highlight: '#F3F3F3',
 
         accent: '#82B1FF',
         error: '#FF5252',
@@ -23,7 +24,8 @@ export default new Vuetify({
       },
       dark: {
         primary: colors.blue.darken4,
-        secondary: colors.blue,
+        secondary: colors.blue.lighten2,
+        highlight: '#111111',
 
         accent: '#82B1FF',
         error: '#FF5252',
