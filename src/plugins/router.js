@@ -29,25 +29,25 @@ const routes = [
     path: '/management/projects',
     name: 'management-project-index',
     component: () => import('../views/management/projects/index/ManagementProjectIndex.vue'),
-    meta: {auth: false, noAuth: true}
+    meta: {auth: true}
   },
   {
     path: '/management/projects/:projectId',
     name: 'management-project-show',
     component: () => import('../views/management/projects/show/ManagementProjectShow.vue'),
-    meta: {auth: false, noAuth: true}
+    meta: {auth: true}
   },
   {
     path: '/management/users',
     name: 'management-user-index',
     component: () => import('../views/management/users/index/ManagementUserIndex.vue'),
-    meta: {auth: false, noAuth: true}
+    meta: {auth: true}
   },
   {
     path: '/management/users/:userId',
     name: 'management-user-show',
     component: () => import('../views/management/users/show/ManagementUserShow.vue'),
-    meta: {auth: false, noAuth: true}
+    meta: {auth: true}
   },
 
   /**
@@ -57,13 +57,13 @@ const routes = [
     path: '/projects/:projectId',
     name: 'project-show',
     component: () => import('../views/projects/show/ProjectShow.vue'),
-    meta: {auth: false, noAuth: true}
+    meta: {auth: true}
   },
   {
     path: '/profile',
     name: 'profile',
     component: () => import('../views/profile/Profile.vue'),
-    meta: {auth: false, noAuth: true}
+    meta: {auth: true}
   },
 
   /**
