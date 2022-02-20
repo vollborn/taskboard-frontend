@@ -1,5 +1,6 @@
 <template>
   <v-menu
+    v-if="user"
     v-model="isOpen"
     bottom
     offset-y
@@ -60,7 +61,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item @click="performLogout">
+          <v-list-item @click="pushRouteTo({name: 'logout'})">
             <v-list-item-icon class="mr-2">
               <div
                 class="d-flex justify-center align-center"
@@ -82,7 +83,7 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex';
+import {mapGetters} from 'vuex';
 
 export default {
   data() {
@@ -94,14 +95,10 @@ export default {
     ...mapGetters('auth', ['user'])
   },
   methods: {
-    ...mapActions('auth', ['logout']),
     getProfileAvatar() {
       let name = this.user.firstName.slice(0, 1) + this.user.lastName.slice(0, 1);
       return name.toUpperCase();
     },
-    performLogout() {
-      this.logout();
-    }
   }
 };
 </script>

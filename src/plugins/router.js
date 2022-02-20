@@ -13,7 +13,13 @@ const routes = [
     path: '/login',
     name: 'login',
     component: () => import('../views/login/Login.vue'),
-    meta: {auth: false, noAuth: true}
+    meta: {noAuth: true}
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: () => import('../views/logout/Logout.vue'),
+    meta: {auth: true}
   },
 
   /**

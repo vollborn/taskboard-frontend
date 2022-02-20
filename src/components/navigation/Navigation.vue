@@ -25,7 +25,8 @@ export default {
   },
   computed: {
     slimInterface() {
-      return this.$route.name === 'not-found';
+      return this.$route.name === 'not-found'
+        || this.$route.name === 'logout';
     }
   },
   methods: {
