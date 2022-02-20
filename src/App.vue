@@ -6,6 +6,7 @@
   </v-app>
 
   <v-app v-else>
+    <the-navigation />
     <v-main>
       <router-view />
     </v-main>
@@ -14,10 +15,11 @@
 
 <script>
 import AuthLoader from '@/components/AuthLoader';
+import TheNavigation from '@/components/navigation/Navigation';
 import {mapActions, mapGetters} from 'vuex';
 
 export default {
-  components: {AuthLoader},
+  components: {AuthLoader, TheNavigation},
   data() {
     return {
       isLoadingAuth: true

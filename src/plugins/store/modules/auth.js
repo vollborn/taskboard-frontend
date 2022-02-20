@@ -1,4 +1,5 @@
 import router from '../../router';
+import { ROUTES } from '@/constants/routes';
 
 const state = {
   isAuth: !!localStorage.getItem('isAuth'),
@@ -43,7 +44,7 @@ const actions = {
   login({commit}, form) {
     return new Promise((resolve, reject) => {
       window.axios
-        .post('auth/login', form)
+        .post(ROUTES.AUTH.LOGIN, form)
         .then((response) => {
           commit('SET_API_TOKEN', response.data.data.apiToken);
           commit('SET_USER', response.data.data);
@@ -60,24 +61,23 @@ const actions = {
   logout({commit}) {
     return new Promise((resolve, reject) => {
       window.axios
-        .post('auth/logout')
+        .post(ROUTES.AUTH.LOGOUT)
         .then((response) => {
           resolve(response);
         })
         .catch((error) => {
           reject(error);
         })
-        .finally(() => {
-          // noinspection JSIgnoredPromiseFromCall
-          router.push({name: 'login'});
-          commit('UNSET_AUTH');
+        .finally(async () => {
+          await commit('UNSET_AUTH');
+          await router.push({name: 'login'});
         });
     });
   },
   getAuth({commit}) {
     return new Promise((resolve, reject) => {
       window.axios
-        .get('auth')
+        .get(ROUTES.AUTH.SHOW)
         .then((response) => {
           commit('SET_USER', response.data.data);
           commit('SET_PERMISSIONS', response.data.data.permissions);
