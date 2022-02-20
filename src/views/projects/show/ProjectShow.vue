@@ -3,12 +3,20 @@
     <v-card flat>
       <v-card-title class="text-h5">
         {{ project.name }}
+        <v-spacer />
+        <TaskCreate
+          :project="project"
+          @reload="reloadTasks"
+        />
       </v-card-title>
       <v-divider class="mx-3" />
       <v-card-subtitle>
         {{ project.description }}
       </v-card-subtitle>
-      <ProjectTasks :project="project" />
+      <ProjectTasks
+        :project="project"
+        @set-task-reload="setTaskReload"
+      />
     </v-card>
   </v-container>
   <v-container v-else>
@@ -24,12 +32,14 @@
 <script>
 import {ROUTES} from '@/constants/routes';
 import ProjectTasks from '@/views/projects/show/partials/ProjectTasks';
+import TaskCreate from '@/views/projects/show/partials/TaskCreate';
 
 export default {
-  components: {ProjectTasks},
+  components: {TaskCreate, ProjectTasks},
   data() {
     return {
-      project: null
+      project: null,
+      taskReload: null
     };
   },
   created() {
@@ -44,6 +54,12 @@ export default {
           }
         })
         .then(({data}) => this.project = data.data);
+    },
+    setTaskReload(func) {
+      this.taskReload = func;
+    },
+    reloadTasks() {
+      this.taskReload();
     }
   }
 };

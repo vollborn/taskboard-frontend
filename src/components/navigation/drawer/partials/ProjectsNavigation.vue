@@ -21,7 +21,7 @@
             </v-chip>
           </div>
         </v-list-item-icon>
-        <v-list-item-content>
+        <v-list-item-content class="body-2">
           {{ project.name }}
         </v-list-item-content>
       </v-list-item>

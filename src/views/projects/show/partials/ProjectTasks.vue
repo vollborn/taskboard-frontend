@@ -7,17 +7,18 @@
     <div class="project-task-scroll pa-1 pb-4">
       <div class="project-task-row">
         <div
-          v-for="taskStatus in project.taskStatuses"
+          v-for="(taskStatus, index) in project.taskStatuses"
           :key="taskStatus.id"
           class="project-task-column"
         >
           <v-card
-            class="mr-3 highlight"
+            class="highlight"
+            :class="project.taskStatuses.length - 1 === index ? '' : 'mr-3'"
             flat
             @drop.prevent="drop(taskStatus.id, $event)"
             @dragover.prevent
           >
-            <v-card-title>
+            <v-card-title :style="'color: ' + taskStatus.color">
               {{ taskStatus.name }}
             </v-card-title>
             <v-row
@@ -30,6 +31,8 @@
                 v-for="task in getTasksForStatus(taskStatus.id)"
                 :key="task.id"
                 :task="task"
+                :project="project"
+                @reload="getTasks"
               />
             </v-row>
           </v-card>
@@ -77,6 +80,7 @@ export default {
       })
     }
   },
+  emits: ['set-task-reload'],
   data() {
     return {
       tasks: null,
@@ -87,6 +91,7 @@ export default {
   },
   created() {
     this.getTasks();
+    this.$emit('set-task-reload', this.getTasks);
   },
   methods: {
     getTasks() {

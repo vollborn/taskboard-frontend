@@ -25,7 +25,7 @@ export default new Vuetify({
       dark: {
         primary: colors.blue.darken4,
         secondary: colors.blue.lighten2,
-        highlight: '#111111',
+        highlight: '#363636',
 
         accent: '#82B1FF',
         error: '#FF5252',
