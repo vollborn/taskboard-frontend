@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-3 pa-md-6">
+  <v-container>
     <v-card flat>
       <v-card-title class="text-h5">
         Profile

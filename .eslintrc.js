@@ -4,7 +4,8 @@ module.exports = {
   ],
   'rules': {
     'quotes': ['warn', 'single'],
-    'semi': ['warn', 'always']
+    'semi': ['warn', 'always'],
+    'vue/valid-v-slot': 'off'
   },
   'globals': {
     'process': 'readonly',

@@ -32,21 +32,9 @@ const routes = [
     meta: {auth: true}
   },
   {
-    path: '/management/projects/:projectId',
-    name: 'management-project-show',
-    component: () => import('../views/management/projects/show/ManagementProjectShow.vue'),
-    meta: {auth: true}
-  },
-  {
     path: '/management/users',
     name: 'management-user-index',
     component: () => import('../views/management/users/index/ManagementUserIndex.vue'),
-    meta: {auth: true}
-  },
-  {
-    path: '/management/users/:userId',
-    name: 'management-user-show',
-    component: () => import('../views/management/users/show/ManagementUserShow.vue'),
     meta: {auth: true}
   },
 

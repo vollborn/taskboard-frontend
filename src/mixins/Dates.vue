@@ -1,5 +1,6 @@
 <script>
 import dayjs from 'dayjs';
+
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 
@@ -18,6 +19,9 @@ export default {
   methods: {
     parseDate(date, defaultVal = null) {
       return date ? dayjs(date).format('DD.MM.YYYY') : defaultVal;
+    },
+    parseDateTime(dateTime, defaultVal = null) {
+      return dateTime ? dayjs(dateTime).format('DD.MM.YYYY HH:mm:ss') : defaultVal;
     },
     today() {
       return dayjs();
