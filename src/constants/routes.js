@@ -18,6 +18,9 @@ const ROUTES = {
     DELETE: '/tasks'
   },
   MANAGEMENT: {
+    PERMISSIONS: {
+      INDEX: '/management/permissions'
+    },
     USERS: {
       INDEX: '/management/users',
       SHOW: '/management/users/show',
@@ -25,7 +28,8 @@ const ROUTES = {
       UPDATE: '/management/users',
       DELETE: '/management/users',
       SYNC: {
-        PROJECTS: '/management/users/projects'
+        PROJECTS: '/management/users/projects',
+        PERMISSIONS: '/management/users/permissions'
       }
     },
     PROJECTS: {

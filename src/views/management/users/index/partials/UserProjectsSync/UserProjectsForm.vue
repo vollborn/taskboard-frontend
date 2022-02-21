@@ -4,6 +4,9 @@
       cols="12"
       md="6"
     >
+      <p class="text-subtitle-1 mt-3">
+        Assigned projects
+      </p>
       <v-data-table
         :headers="headers"
         :items="hasProjects"
@@ -28,6 +31,9 @@
       cols="12"
       md="6"
     >
+      <p class="text-subtitle-1 mt-3">
+        Available projects
+      </p>
       <v-data-table
         :headers="headers"
         :items="doesntHaveProjects"

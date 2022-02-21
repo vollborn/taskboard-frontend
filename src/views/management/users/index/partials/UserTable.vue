@@ -15,6 +15,9 @@
       <UserProjectsSync
         :user="item"
       />
+      <UserPermissionsSync
+        :user="item"
+      />
       <UserDelete
         v-if="item.id !== 1"
         :user="item"
@@ -30,9 +33,10 @@ import BaseDataTable from '@/components/base/BaseDataTable';
 import UserDelete from '@/views/management/users/index/partials/UserDelete';
 import UserUpdate from '@/views/management/users/index/partials/UserUpdate';
 import UserProjectsSync from '@/views/management/users/index/partials/UserProjectsSync/UserProjectsSync';
+import UserPermissionsSync from '@/views/management/users/index/partials/UserPermissionsSync/UserPermissionsSync';
 
 export default {
-  components: {UserProjectsSync, UserUpdate, UserDelete, BaseDataTable},
+  components: {UserPermissionsSync, UserProjectsSync, UserUpdate, UserDelete, BaseDataTable},
   emits: ['set-reload'],
   data() {
     return {
