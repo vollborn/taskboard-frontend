@@ -12,6 +12,9 @@
         :user="item"
         @reload="getItems"
       />
+      <UserProjectsSync
+        :user="item"
+      />
       <UserDelete
         v-if="item.id !== 1"
         :user="item"
@@ -26,9 +29,10 @@ import {ROUTES} from '@/constants/routes';
 import BaseDataTable from '@/components/base/BaseDataTable';
 import UserDelete from '@/views/management/users/index/partials/UserDelete';
 import UserUpdate from '@/views/management/users/index/partials/UserUpdate';
+import UserProjectsSync from '@/views/management/users/index/partials/UserProjectsSync/UserProjectsSync';
 
 export default {
-  components: {UserUpdate, UserDelete, BaseDataTable},
+  components: {UserProjectsSync, UserUpdate, UserDelete, BaseDataTable},
   emits: ['set-reload'],
   data() {
     return {
