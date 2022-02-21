@@ -18,6 +18,10 @@
           :project="project"
           @reload="reload"
         />
+        <TaskDelete
+          :task="task"
+          @reload="reload"
+        />
       </v-card-title>
       <v-card-subtitle>
         {{ task.user.firstName }} {{ task.user.lastName }} ▪ {{ parseDate(task.createdAt) }}
@@ -32,8 +36,9 @@
 
 <script>
 import TaskUpdate from '@/views/projects/show/partials/TaskUpdate';
+import TaskDelete from '@/views/projects/show/partials/TaskDelete';
 export default {
-  components: {TaskUpdate},
+  components: {TaskDelete, TaskUpdate},
   props: {
     task: {
       type: Object,
