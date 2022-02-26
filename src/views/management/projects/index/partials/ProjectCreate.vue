@@ -1,46 +1,38 @@
 <template>
   <v-dialog
     v-model="dialog"
-    fullscreen
-    hide-overlay
-    transition="dialog-bottom-transition"
+    persistent
+    max-width="600px"
   >
     <template #activator="{ on, attrs }">
       <v-btn
-        icon
         color="primary"
+        dark
         v-bind="attrs"
         v-on="on"
       >
-        <v-icon small>
-          fa-lock
+        <v-icon
+          class="mr-3"
+          small
+          color="white"
+        >
+          fa-plus
         </v-icon>
+        Create Project
       </v-btn>
     </template>
 
     <v-card tile>
-      <v-toolbar
-        dark
-        color="primary"
-      >
-        <v-toolbar-title>Add Permissions</v-toolbar-title>
-        <v-spacer />
-        <v-btn
-          icon
-          dark
-          class="mx-0"
-          @click="closeDialog"
-        >
-          <v-icon>fa-times</v-icon>
-        </v-btn>
-      </v-toolbar>
+      <v-card-title class="primary white--text">
+        Create Project
+      </v-card-title>
       <v-card-text class="mt-3">
-        <UserPermissionsForm
-          v-model="permissionIds"
-          :user="user"
+        <ProjectForm
+          v-model="form"
+          :create="true"
         />
       </v-card-text>
-      <v-card-actions class="px-6 pb-3">
+      <v-card-actions class="px-3 pb-3">
         <v-btn
           class="px-3"
           @click="closeDialog"
@@ -51,6 +43,7 @@
         <v-btn
           color="primary"
           class="px-3"
+          :disabled="!canSubmit"
           :loading="isLoading"
           @click="submit"
         >
@@ -69,39 +62,47 @@
 
 <script>
 import {ROUTES} from '@/constants/routes';
-import UserPermissionsForm from '@/views/management/users/index/partials/UserPermissionsSync/UserPermissionsForm';
+import ProjectForm from './ProjectForm';
 
 export default {
-  components: {UserPermissionsForm},
-  props: {
-    user: {
-      type: Object,
-      required: true,
-      default: () => ({
-        id: null
-      })
-    }
-  },
+  components: {ProjectForm},
+  emits: ['reload'],
   data() {
     return {
       dialog: false,
       isLoading: false,
-      permissionIds: []
+      form: {
+        name: null,
+        description: null
+      }
     };
   },
+  computed: {
+    canSubmit() {
+      return !!this.form.name;
+    }
+  },
   methods: {
+    reload() {
+      this.$emit('reload');
+    },
     closeDialog() {
       this.dialog = false;
+      this.form = {
+        name: null,
+        description: null
+      };
     },
     submit() {
       this.isLoading = true;
       window.axios
-        .put(ROUTES.MANAGEMENT.USERS.SYNC.PERMISSIONS, {
-          userId: this.user.id,
-          permissionIds: this.permissionIds
+        .post(ROUTES.MANAGEMENT.PROJECTS.STORE, {
+          name: this.form.name,
+          description: this.form.description
         })
         .then(() => {
           this.closeDialog();
+          this.reload();
         })
         .finally(() => this.isLoading = false);
     }

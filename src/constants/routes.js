@@ -39,7 +39,7 @@ const ROUTES = {
       UPDATE: '/management/projects',
       DELETE: '/management/projects',
       SYNC: {
-        PROJECTS: '/management/projects/users'
+        USERS: '/management/projects/users'
       }
     }
   }

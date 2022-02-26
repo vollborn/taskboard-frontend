@@ -1,9 +1,8 @@
 <template>
   <v-dialog
     v-model="dialog"
-    fullscreen
-    hide-overlay
-    transition="dialog-bottom-transition"
+    persistent
+    max-width="600px"
   >
     <template #activator="{ on, attrs }">
       <v-btn
@@ -13,34 +12,22 @@
         v-on="on"
       >
         <v-icon small>
-          fa-lock
+          fa-pen
         </v-icon>
       </v-btn>
     </template>
 
     <v-card tile>
-      <v-toolbar
-        dark
-        color="primary"
-      >
-        <v-toolbar-title>Add Permissions</v-toolbar-title>
-        <v-spacer />
-        <v-btn
-          icon
-          dark
-          class="mx-0"
-          @click="closeDialog"
-        >
-          <v-icon>fa-times</v-icon>
-        </v-btn>
-      </v-toolbar>
+      <v-card-title class="primary white--text">
+        Update Project
+      </v-card-title>
       <v-card-text class="mt-3">
-        <UserPermissionsForm
-          v-model="permissionIds"
-          :user="user"
+        <ProjectForm
+          v-model="form"
+          :create="true"
         />
       </v-card-text>
-      <v-card-actions class="px-6 pb-3">
+      <v-card-actions class="px-3 pb-3">
         <v-btn
           class="px-3"
           @click="closeDialog"
@@ -51,6 +38,7 @@
         <v-btn
           color="primary"
           class="px-3"
+          :disabled="!canSubmit"
           :loading="isLoading"
           @click="submit"
         >
@@ -69,39 +57,61 @@
 
 <script>
 import {ROUTES} from '@/constants/routes';
-import UserPermissionsForm from '@/views/management/users/index/partials/UserPermissionsSync/UserPermissionsForm';
+import ProjectForm from './ProjectForm';
+import {mapActions} from 'vuex';
 
 export default {
-  components: {UserPermissionsForm},
+  components: {ProjectForm},
   props: {
-    user: {
+    project: {
       type: Object,
       required: true,
       default: () => ({
-        id: null
+        name: null,
+        description: null
       })
     }
   },
+  emits: ['reload'],
   data() {
     return {
       dialog: false,
       isLoading: false,
-      permissionIds: []
+      form: {
+        name: this.project.name,
+        description: this.project.description
+      }
     };
   },
+  computed: {
+    canSubmit() {
+      return !!this.form.name;
+    }
+  },
   methods: {
+    ...mapActions('project', ['getProjects']),
+    reload() {
+      this.$emit('reload');
+    },
     closeDialog() {
       this.dialog = false;
+      this.form = {
+        name: this.project.name,
+        description: this.project.description
+      };
     },
     submit() {
       this.isLoading = true;
       window.axios
-        .put(ROUTES.MANAGEMENT.USERS.SYNC.PERMISSIONS, {
-          userId: this.user.id,
-          permissionIds: this.permissionIds
+        .put(ROUTES.MANAGEMENT.PROJECTS.UPDATE, {
+          projectId: this.project.id,
+          name: this.form.name,
+          description: this.form.description
         })
         .then(() => {
+          this.getProjects();
           this.closeDialog();
+          this.reload();
         })
         .finally(() => this.isLoading = false);
     }

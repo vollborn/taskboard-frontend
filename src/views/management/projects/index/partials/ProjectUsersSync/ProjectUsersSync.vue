@@ -13,7 +13,7 @@
         v-on="on"
       >
         <v-icon small>
-          fa-lock
+          fa-user
         </v-icon>
       </v-btn>
     </template>
@@ -23,7 +23,7 @@
         dark
         color="primary"
       >
-        <v-toolbar-title>Add Permissions</v-toolbar-title>
+        <v-toolbar-title>Add Users</v-toolbar-title>
         <v-spacer />
         <v-btn
           icon
@@ -35,9 +35,9 @@
         </v-btn>
       </v-toolbar>
       <v-card-text class="mt-3">
-        <UserPermissionsForm
-          v-model="permissionIds"
-          :user="user"
+        <ProjectUsersForm
+          v-model="userIds"
+          :project="project"
         />
       </v-card-text>
       <v-card-actions class="px-6 pb-3">
@@ -69,12 +69,13 @@
 
 <script>
 import {ROUTES} from '@/constants/routes';
-import UserPermissionsForm from '@/views/management/users/index/partials/UserPermissionsSync/UserPermissionsForm';
+import ProjectUsersForm from '@/views/management/projects/index/partials/ProjectUsersSync/ProjectUsersForm';
+import {mapActions} from 'vuex';
 
 export default {
-  components: {UserPermissionsForm},
+  components: {ProjectUsersForm},
   props: {
-    user: {
+    project: {
       type: Object,
       required: true,
       default: () => ({
@@ -86,21 +87,23 @@ export default {
     return {
       dialog: false,
       isLoading: false,
-      permissionIds: []
+      userIds: []
     };
   },
   methods: {
+    ...mapActions('project', ['getProjects']),
     closeDialog() {
       this.dialog = false;
     },
     submit() {
       this.isLoading = true;
       window.axios
-        .put(ROUTES.MANAGEMENT.USERS.SYNC.PERMISSIONS, {
-          userId: this.user.id,
-          permissionIds: this.permissionIds
+        .put(ROUTES.MANAGEMENT.PROJECTS.SYNC.USERS, {
+          projectId: this.project.id,
+          userIds: this.userIds
         })
         .then(() => {
+          this.getProjects();
           this.closeDialog();
         })
         .finally(() => this.isLoading = false);
