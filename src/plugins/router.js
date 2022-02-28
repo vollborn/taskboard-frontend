@@ -32,6 +32,19 @@ const routes = [
     meta: {auth: true}
   },
   {
+    path: '/management/projects/create',
+    name: 'management-project-create',
+    component: () => import('../views/management/projects/create/ManagementProjectCreate.vue'),
+    meta: {auth: true}
+  },
+  {
+    path: '/management/projects/:projectId',
+    name: 'management-project-update',
+    component: () => import('../views/management/projects/update/ManagementProjectUpdate.vue'),
+    meta: {auth: true}
+  },
+
+  {
     path: '/management/users',
     name: 'management-user-index',
     component: () => import('../views/management/users/index/ManagementUserIndex.vue'),

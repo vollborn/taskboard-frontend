@@ -1,38 +1,46 @@
 <template>
-  <v-container>
-    <v-card flat>
-      <v-card-title class="text-h5">
-        Projects
-        <v-spacer />
-        <ProjectCreate @reload="callReload" />
-      </v-card-title>
-      <v-divider class="mx-3" />
-      <v-row class="px-3 mt-3">
-        <v-col cols="12">
-          <ProjectTable @set-reload="setReload" />
-        </v-col>
-      </v-row>
-    </v-card>
-  </v-container>
+  <BaseContainerCard>
+    <template #title>
+      Projects
+      <v-spacer />
+      <v-btn
+        color="primary"
+        dark
+        @click="gotoCreate"
+      >
+        <v-icon
+          class="mr-3"
+          small
+          color="white"
+        >
+          fa-plus
+        </v-icon>
+        Create project
+      </v-btn>
+    </template>
+
+    <template #default>
+      <ProjectTable />
+    </template>
+  </BaseContainerCard>
 </template>
 
 <script>
 import ProjectTable from '@/views/management/projects/index/partials/ProjectTable';
-import ProjectCreate from '@/views/management/projects/index/partials/ProjectCreate';
+import BaseContainerCard from '@/components/base/BaseContainerCard';
 
 export default {
-  components: {ProjectCreate, ProjectTable},
+  components: {BaseContainerCard, ProjectTable},
   data() {
     return {
       reload: null
     };
   },
   methods: {
-    setReload(reload) {
-      this.reload = reload;
-    },
-    callReload() {
-      this.reload();
+    gotoCreate() {
+      this.pushRouteTo({
+        name: 'management-project-create'
+      });
     }
   }
 };

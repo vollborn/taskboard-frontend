@@ -8,14 +8,10 @@
     @page="setPage"
   >
     <template #actions="{item}">
-      <ProjectUpdate
-        :project="item"
-        @reload="getItems"
-      />
-      <ProjectUsersSync
+      <ProjectUpdateButton
         :project="item"
       />
-      <ProjectDelete
+      <ProjectDeleteButton
         :project="item"
         @reload="getItems"
       />
@@ -26,12 +22,11 @@
 <script>
 import {ROUTES} from '@/constants/routes';
 import BaseDataTable from '@/components/base/BaseDataTable';
-import ProjectDelete from '@/views/management/projects/index/partials/ProjectDelete';
-import ProjectUpdate from '@/views/management/projects/index/partials/ProjectUpdate';
-import ProjectUsersSync from '@/views/management/projects/index/partials/ProjectUsersSync/ProjectUsersSync';
+import ProjectDeleteButton from '@/views/management/projects/index/partials/ProjectDeleteButton';
+import ProjectUpdateButton from '@/views/management/projects/index/partials/ProjectUpdateButton';
 
 export default {
-  components: {ProjectUsersSync, ProjectUpdate, ProjectDelete, BaseDataTable},
+  components: {ProjectUpdateButton, ProjectDeleteButton, BaseDataTable},
   emits: ['set-reload'],
   data() {
     return {
