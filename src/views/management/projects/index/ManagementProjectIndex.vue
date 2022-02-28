@@ -3,20 +3,7 @@
     <template #title>
       Projects
       <v-spacer />
-      <v-btn
-        color="primary"
-        dark
-        @click="gotoCreate"
-      >
-        <v-icon
-          class="mr-3"
-          small
-          color="white"
-        >
-          fa-plus
-        </v-icon>
-        Create project
-      </v-btn>
+      <ProjectCreateButton />
     </template>
 
     <template #default>
@@ -28,20 +15,9 @@
 <script>
 import ProjectTable from '@/views/management/projects/index/partials/ProjectTable';
 import BaseContainerCard from '@/components/base/BaseContainerCard';
+import ProjectCreateButton from '@/views/management/projects/index/partials/ProjectCreateButton';
 
 export default {
-  components: {BaseContainerCard, ProjectTable},
-  data() {
-    return {
-      reload: null
-    };
-  },
-  methods: {
-    gotoCreate() {
-      this.pushRouteTo({
-        name: 'management-project-create'
-      });
-    }
-  }
+  components: {ProjectCreateButton, BaseContainerCard, ProjectTable},
 };
 </script>

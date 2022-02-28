@@ -50,6 +50,18 @@ const routes = [
     component: () => import('../views/management/users/index/ManagementUserIndex.vue'),
     meta: {auth: true}
   },
+  {
+    path: '/management/users/create',
+    name: 'management-user-create',
+    component: () => import('../views/management/users/create/ManagementUserCreate.vue'),
+    meta: {auth: true}
+  },
+  {
+    path: '/management/users/:userId',
+    name: 'management-user-update',
+    component: () => import('../views/management/users/update/ManagementUserUpdate.vue'),
+    meta: {auth: true}
+  },
 
   /**
    * Common

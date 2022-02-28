@@ -49,10 +49,8 @@ export default {
       })
     }
   },
-  emits: ['reload'],
   data() {
     return {
-      dialog: false,
       isLoading: false,
       form: {
         name: this.project.name,
@@ -67,16 +65,6 @@ export default {
   },
   methods: {
     ...mapActions('project', ['getProjects']),
-    reload() {
-      this.$emit('reload');
-    },
-    closeDialog() {
-      this.dialog = false;
-      this.form = {
-        name: this.project.name,
-        description: this.project.description
-      };
-    },
     submit() {
       this.isLoading = true;
       window.axios

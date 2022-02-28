@@ -27,7 +27,6 @@ import ProjectUpdateButton from '@/views/management/projects/index/partials/Proj
 
 export default {
   components: {ProjectUpdateButton, ProjectDeleteButton, BaseDataTable},
-  emits: ['set-reload'],
   data() {
     return {
       isLoading: false,
@@ -65,7 +64,6 @@ export default {
   },
   created() {
     this.getItems();
-    this.$emit('set-reload', this.getItems);
   },
   methods: {
     setPage(page) {

@@ -8,17 +8,10 @@
     @page="setPage"
   >
     <template #actions="{item}">
-      <UserUpdate
-        :user="item"
-        @reload="getItems"
-      />
-      <UserProjectsSync
+      <UserUpdateButton
         :user="item"
       />
-      <UserPermissionsSync
-        :user="item"
-      />
-      <UserDelete
+      <UserDeleteButton
         v-if="item.id !== 1"
         :user="item"
         @reload="getItems"
@@ -30,14 +23,11 @@
 <script>
 import {ROUTES} from '@/constants/routes';
 import BaseDataTable from '@/components/base/BaseDataTable';
-import UserDelete from '@/views/management/users/index/partials/UserDelete';
-import UserUpdate from '@/views/management/users/index/partials/UserUpdate';
-import UserProjectsSync from '@/views/management/users/index/partials/UserProjectsSync/UserProjectsSync';
-import UserPermissionsSync from '@/views/management/users/index/partials/UserPermissionsSync/UserPermissionsSync';
+import UserDeleteButton from '@/views/management/users/index/partials/UserDeleteButton';
+import UserUpdateButton from '@/views/management/users/index/partials/UserUpdateButton';
 
 export default {
-  components: {UserPermissionsSync, UserProjectsSync, UserUpdate, UserDelete, BaseDataTable},
-  emits: ['set-reload'],
+  components: {UserUpdateButton, UserDeleteButton, BaseDataTable},
   data() {
     return {
       isLoading: false,
@@ -85,7 +75,6 @@ export default {
   },
   created() {
     this.getItems();
-    this.$emit('set-reload', this.getItems);
   },
   methods: {
     setPage(page) {
