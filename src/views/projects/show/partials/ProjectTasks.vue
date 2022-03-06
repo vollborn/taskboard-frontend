@@ -33,6 +33,7 @@
                 :task="task"
                 :project="project"
                 @reload="getTasks"
+                @set-task-callback="setTaskCallback"
               />
             </v-row>
           </v-card>
@@ -86,7 +87,8 @@ export default {
       tasks: null,
       isLoadingTasks: true,
       requestCount: 0,
-      finishedRequestCount: 0
+      finishedRequestCount: 0,
+      taskCallbacks: {}
     };
   },
   created() {
@@ -94,6 +96,9 @@ export default {
     this.$emit('set-task-reload', this.getTasks);
   },
   methods: {
+    setTaskCallback(id, callback) {
+      this.taskCallbacks[id] = callback;
+    },
     getTasks() {
       this.isLoadingTasks = true;
       window.axios
@@ -119,6 +124,7 @@ export default {
           taskId,
           taskStatusId
         })
+        .then(({ data }) => this.taskCallbacks[taskId](data.data))
         .catch(() => this.getTasks())
         .finally(() => this.finishedRequestCount++);
     }

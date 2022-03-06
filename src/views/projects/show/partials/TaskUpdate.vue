@@ -98,6 +98,18 @@ export default {
       return this.form.name && this.form.description;
     }
   },
+  watch: {
+    task: {
+      deep: true,
+      handler(value) {
+        this.form = {
+          name: value.name,
+          description: value.description,
+          taskStatusId: value.taskStatusId
+        };
+      }
+    }
+  },
   methods: {
     reload() {
       this.$emit('reload');

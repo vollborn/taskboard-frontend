@@ -1,6 +1,6 @@
 <template>
   <v-col
-    :id="'task-' + task.id"
+    :id="'task-' + currentTask.id"
     cols="12"
     draggable="true"
     class="mb-1"
@@ -11,24 +11,24 @@
   >
     <v-card class="cursor-pointer">
       <v-card-title>
-        {{ task.name }}
+        {{ currentTask.name }}
         <v-spacer />
         <TaskUpdate
-          :task="task"
+          :task="currentTask"
           :project="project"
           @reload="reload"
         />
         <TaskDelete
-          :task="task"
+          :task="currentTask"
           @reload="reload"
         />
       </v-card-title>
       <v-card-subtitle>
-        {{ task.user.firstName }} {{ task.user.lastName }} ▪ {{ parseDate(task.createdAt) }}
+        {{ currentTask.user.firstName }} {{ currentTask.user.lastName }} ▪ {{ parseDate(currentTask.createdAt) }}
       </v-card-subtitle>
       <v-divider />
       <v-card-text>
-        {{ task.description }}
+        {{ currentTask.description }}
       </v-card-text>
     </v-card>
   </v-col>
@@ -37,6 +37,7 @@
 <script>
 import TaskUpdate from '@/views/projects/show/partials/TaskUpdate';
 import TaskDelete from '@/views/projects/show/partials/TaskDelete';
+
 export default {
   components: {TaskDelete, TaskUpdate},
   props: {
@@ -62,13 +63,32 @@ export default {
       })
     }
   },
-  emits: ['task-drop', 'reload'],
+  emits: ['set-task-callback', 'reload'],
+  data() {
+    return {
+      currentTask: this.task
+    };
+  },
+  watch: {
+    task: {
+      deep: true,
+      handler(value) {
+        this.currentTask = value;
+      }
+    }
+  },
+  created() {
+    this.$emit('set-task-callback', this.task.id, this.setTask);
+  },
   methods: {
     dragstart(event) {
       event.dataTransfer.setData('taskId', this.task.id);
     },
     reload() {
       this.$emit('reload');
+    },
+    setTask(task) {
+      this.currentTask = task;
     }
   }
 };
