@@ -5,6 +5,7 @@
         {{ project.name }}
         <v-spacer />
         <TaskCreate
+          v-if="project.taskStatuses.length > 0"
           :project="project"
           @reload="reloadTasks"
         />
@@ -14,6 +15,7 @@
         {{ project.description }}
       </v-card-subtitle>
       <ProjectTasks
+        v-if="project.taskStatuses.length > 0"
         :project="project"
         @set-task-reload="setTaskReload"
       />
@@ -42,11 +44,17 @@ export default {
       taskReload: null
     };
   },
+  watch: {
+    '$route.params.projectId'() {
+      this.getProject();
+    }
+  },
   created() {
     this.getProject();
   },
   methods: {
     getProject() {
+      this.project = null;
       window.axios
         .get(ROUTES.PROJECTS.SHOW, {
           params: {

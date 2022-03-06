@@ -23,6 +23,12 @@
     </v-col>
     <v-col
       cols="12"
+      class="mt-6"
+    >
+      <ProjectStatuses :project="project" />
+    </v-col>
+    <v-col
+      cols="12"
       class="mt-6 mb-3"
     >
       <ProjectUsersSync :project="project" />
@@ -36,9 +42,10 @@ import {ROUTES} from '@/constants/routes';
 import ProjectForm from '@/components/management/project/ProjectForm';
 import ProjectUsersSync from '@/views/management/projects/update/partials/ProjectUsersSync/ProjectUsersSync';
 import BaseSaveButton from '@/components/base/BaseSaveButton';
+import ProjectStatuses from '@/views/management/projects/update/partials/ProjectStatuses/ProjectStatuses';
 
 export default {
-  components: {BaseSaveButton, ProjectUsersSync, ProjectForm},
+  components: {ProjectStatuses, BaseSaveButton, ProjectUsersSync, ProjectForm},
   props: {
     project: {
       type: Object,

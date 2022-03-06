@@ -41,6 +41,13 @@ const ROUTES = {
       SYNC: {
         USERS: '/management/projects/users'
       }
+    },
+    TASK_STATUSES: {
+      INDEX: '/management/task-statuses',
+      SHOW: '/management/task-statuses/show',
+      STORE: '/management/task-statuses',
+      UPDATE: '/management/task-statuses',
+      DELETE: '/management/task-statuses',
     }
   }
 };
