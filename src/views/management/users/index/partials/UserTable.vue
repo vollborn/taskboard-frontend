@@ -9,10 +9,11 @@
   >
     <template #actions="{item}">
       <UserUpdateButton
+        v-if="can('management.user.update')"
         :user="item"
       />
       <UserDeleteButton
-        v-if="item.id !== 1"
+        v-if="item.id !== 1 && can('management.user.delete')"
         :user="item"
         @reload="getItems"
       />
@@ -25,9 +26,11 @@ import {ROUTES} from '@/constants/routes';
 import BaseDataTable from '@/components/base/BaseDataTable';
 import UserDeleteButton from '@/views/management/users/index/partials/UserDeleteButton';
 import UserUpdateButton from '@/views/management/users/index/partials/UserUpdateButton';
+import Permissions from '@/mixins/Permissions';
 
 export default {
   components: {UserUpdateButton, UserDeleteButton, BaseDataTable},
+  mixins: [Permissions],
   data() {
     return {
       isLoading: false,

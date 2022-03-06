@@ -68,9 +68,11 @@
 <script>
 import {ROUTES} from '@/constants/routes';
 import Task from '@/views/projects/show/partials/Task';
+import Permissions from '@/mixins/Permissions';
 
 export default {
   components: {Task},
+  mixins: [Permissions],
   props: {
     project: {
       type: Object,
@@ -114,6 +116,10 @@ export default {
       return this.tasks.filter((item) => item.taskStatusId === taskStatusId);
     },
     drop(taskStatusId, event) {
+      if (!this.can('task.update')) {
+        return;
+      }
+
       const taskId = event.dataTransfer.getData('taskId');
       const task = document.getElementById('task-' + taskId);
       document.getElementById('task-status-row-' + taskStatusId).appendChild(task);

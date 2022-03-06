@@ -5,7 +5,7 @@
         {{ project.name }}
         <v-spacer />
         <TaskCreate
-          v-if="project.taskStatuses.length > 0"
+          v-if="project.taskStatuses.length > 0 && can('task.create')"
           :project="project"
           @reload="reloadTasks"
         />
@@ -35,9 +35,11 @@
 import {ROUTES} from '@/constants/routes';
 import ProjectTasks from '@/views/projects/show/partials/ProjectTasks';
 import TaskCreate from '@/views/projects/show/partials/TaskCreate';
+import Permissions from '@/mixins/Permissions';
 
 export default {
   components: {TaskCreate, ProjectTasks},
+  mixins: [Permissions],
   data() {
     return {
       project: null,

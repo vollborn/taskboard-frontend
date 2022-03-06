@@ -19,6 +19,7 @@
           @reload="reload"
         />
         <TaskDelete
+          v-if="can('task.delete')"
           :task="currentTask"
           @reload="reload"
         />
@@ -37,9 +38,11 @@
 <script>
 import TaskUpdate from '@/views/projects/show/partials/TaskUpdate';
 import TaskDelete from '@/views/projects/show/partials/TaskDelete';
+import Permissions from '@/mixins/Permissions';
 
 export default {
   components: {TaskDelete, TaskUpdate},
+  mixins: [Permissions],
   props: {
     task: {
       type: Object,

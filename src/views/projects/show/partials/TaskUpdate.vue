@@ -1,7 +1,7 @@
 <template>
   <v-dialog
     v-model="dialog"
-    persistent
+    :persistent="canUpdate"
     max-width="600px"
   >
     <template #activator="{ on, attrs }">
@@ -21,37 +21,37 @@
     </template>
     <v-card tile>
       <v-card-title class="primary white--text">
-        Update Task
+        <template v-if="canUpdate">
+          Update
+        </template>
+        <template v-else>
+          Show
+        </template>
+        Task
       </v-card-title>
       <v-card-text class="mt-3">
         <TaskForm
           v-model="form"
           :project="project"
+          :readonly="!canUpdate"
         />
       </v-card-text>
       <v-card-actions class="px-3 pb-3">
+        <v-spacer v-if="!canUpdate" />
         <v-btn
           class="px-3"
           @click="closeDialog"
         >
           Close
         </v-btn>
-        <v-spacer />
-        <v-btn
-          color="primary"
-          class="px-3"
-          :disabled="!canSubmit"
-          :loading="isLoading"
-          @click="submit"
-        >
-          <v-icon
-            class="mr-2"
-            small
-          >
-            fa-save
-          </v-icon>
-          Save
-        </v-btn>
+        <template v-if="canUpdate">
+          <v-spacer />
+          <BaseSaveButton
+            :disabled="!canSubmit"
+            :loading="isLoading"
+            @submit="submit"
+          />
+        </template>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -60,9 +60,12 @@
 <script>
 import {ROUTES} from '@/constants/routes';
 import TaskForm from '@/views/projects/show/partials/TaskForm';
+import Permissions from '@/mixins/Permissions';
+import BaseSaveButton from '@/components/base/BaseSaveButton';
 
 export default {
-  components: {TaskForm},
+  components: {BaseSaveButton, TaskForm},
+  mixins: [Permissions],
   props: {
     project: {
       type: Object,
@@ -96,6 +99,9 @@ export default {
   computed: {
     canSubmit() {
       return this.form.name && this.form.description;
+    },
+    canUpdate() {
+      return this.can('task.update');
     }
   },
   watch: {

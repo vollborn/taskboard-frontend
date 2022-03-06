@@ -4,6 +4,7 @@
       <v-text-field
         v-model="form.name"
         label="Name"
+        :readonly="readonly"
       />
     </v-col>
 
@@ -11,6 +12,7 @@
       <v-textarea
         v-model="form.description"
         label="Description"
+        :readonly="readonly"
       />
     </v-col>
 
@@ -21,6 +23,7 @@
         item-value="id"
         item-text="name"
         label="Status"
+        :readonly="readonly"
       />
     </v-col>
   </v-row>
@@ -45,6 +48,11 @@ export default {
         taskStatuses: []
       })
     },
+    readonly: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
   },
   emits: ['input'],
   computed: {

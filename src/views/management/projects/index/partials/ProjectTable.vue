@@ -9,9 +9,11 @@
   >
     <template #actions="{item}">
       <ProjectUpdateButton
+        v-if="can('management.project.update')"
         :project="item"
       />
       <ProjectDeleteButton
+        v-if="can('management.project.delete')"
         :project="item"
         @reload="getItems"
       />
@@ -24,9 +26,11 @@ import {ROUTES} from '@/constants/routes';
 import BaseDataTable from '@/components/base/BaseDataTable';
 import ProjectDeleteButton from '@/views/management/projects/index/partials/ProjectDeleteButton';
 import ProjectUpdateButton from '@/views/management/projects/index/partials/ProjectUpdateButton';
+import Permissions from '@/mixins/Permissions';
 
 export default {
   components: {ProjectUpdateButton, ProjectDeleteButton, BaseDataTable},
+  mixins: [Permissions],
   data() {
     return {
       isLoading: false,

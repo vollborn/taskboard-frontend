@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div v-if="canAny(navigationPermissions)">
     <v-subheader class="secondary--text mt-2">
       Management
     </v-subheader>
 
     <v-list-item
       v-for="(item, index) in items"
+      v-show="can(item.permission)"
       :key="index"
       link
       @click="pushRouteTo({name: item.route})"
@@ -28,17 +29,26 @@
 </template>
 
 <script>
+import Permissions from '@/mixins/Permissions';
+
 export default {
+  mixins: [Permissions],
   data() {
     return {
+      navigationPermissions: [
+        'management.project.read',
+        'management.user.read'
+      ],
       items: [
         {
           label: 'Projects',
+          permission: 'management.project.read',
           route: 'management-project-index',
           icon: 'fa-book'
         },
         {
           label: 'Users',
+          permission: 'management.user.read',
           route: 'management-user-index',
           icon: 'fa-user'
         },
