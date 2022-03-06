@@ -48,6 +48,7 @@ const actions = {
         .then((response) => {
           commit('SET_API_TOKEN', response.data.data.apiToken);
           commit('SET_USER', response.data.data);
+          commit('SET_PERMISSIONS', response.data.data.permissions);
 
           commit('SET_IS_AUTH', true);
           resolve(response);

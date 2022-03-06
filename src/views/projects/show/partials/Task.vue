@@ -6,7 +6,7 @@
     class="mb-1"
     @dragstart="dragstart"
     @dragover.stop
-    @drop.prevent="() => {}"
+    @drop.prevent
     @dragover.prevent
   >
     <v-card class="cursor-pointer">

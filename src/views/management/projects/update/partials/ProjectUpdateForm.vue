@@ -1,6 +1,9 @@
 <template>
   <v-row no-gutters>
-    <v-col cols="12">
+    <v-col
+      cols="12"
+      class="mb-3"
+    >
       <v-card tile>
         <v-card-title>
           Base data
@@ -23,13 +26,14 @@
     </v-col>
     <v-col
       cols="12"
-      class="mt-6"
+      class="mt-3 mb-3"
     >
       <ProjectStatuses :project="project" />
     </v-col>
     <v-col
+      v-if="can('management.user.read')"
       cols="12"
-      class="mt-6 mb-3"
+      class="mt-3 mb-3"
     >
       <ProjectUsersSync :project="project" />
     </v-col>
@@ -43,9 +47,11 @@ import ProjectForm from '@/components/management/project/ProjectForm';
 import ProjectUsersSync from '@/views/management/projects/update/partials/ProjectUsersSync/ProjectUsersSync';
 import BaseSaveButton from '@/components/base/BaseSaveButton';
 import ProjectStatuses from '@/views/management/projects/update/partials/ProjectStatuses/ProjectStatuses';
+import Permissions from '@/mixins/Permissions';
 
 export default {
   components: {ProjectStatuses, BaseSaveButton, ProjectUsersSync, ProjectForm},
+  mixins: [Permissions],
   props: {
     project: {
       type: Object,

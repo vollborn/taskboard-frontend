@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from './store';
+import {can} from '@/functions/permissions';
 
 const routes = [
   {
@@ -29,38 +30,38 @@ const routes = [
     path: '/management/projects',
     name: 'management-project-index',
     component: () => import('../views/management/projects/index/ManagementProjectIndex.vue'),
-    meta: {auth: true}
+    meta: {auth: true, permission: 'management.project.read'}
   },
   {
     path: '/management/projects/create',
     name: 'management-project-create',
     component: () => import('../views/management/projects/create/ManagementProjectCreate.vue'),
-    meta: {auth: true}
+    meta: {auth: true, permission: 'management.project.create'}
   },
   {
     path: '/management/projects/:projectId',
     name: 'management-project-update',
     component: () => import('../views/management/projects/update/ManagementProjectUpdate.vue'),
-    meta: {auth: true}
+    meta: {auth: true, permission: 'management.project.update'}
   },
 
   {
     path: '/management/users',
     name: 'management-user-index',
     component: () => import('../views/management/users/index/ManagementUserIndex.vue'),
-    meta: {auth: true}
+    meta: {auth: true, permission: 'management.user.read'}
   },
   {
     path: '/management/users/create',
     name: 'management-user-create',
     component: () => import('../views/management/users/create/ManagementUserCreate.vue'),
-    meta: {auth: true}
+    meta: {auth: true, permission: 'management.user.create'}
   },
   {
     path: '/management/users/:userId',
     name: 'management-user-update',
     component: () => import('../views/management/users/update/ManagementUserUpdate.vue'),
-    meta: {auth: true}
+    meta: {auth: true, permission: 'management.user.update'}
   },
 
   /**
@@ -96,13 +97,19 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const auth = store.getters['auth/isAuth'];
+  const permissions = store.getters['auth/permissions'];
+
   if (to.meta.auth && !auth) {
     return next({name: 'login'});
   } else if (to.meta.noAuth && auth) {
     return next({name: 'home'});
-  } else {
-    return next();
   }
+
+  if (auth && permissions && to.meta.permission && !can(to.meta.permission)) {
+    return next({name: 'home'});
+  }
+
+  return next();
 });
 
 router.afterEach(() => {

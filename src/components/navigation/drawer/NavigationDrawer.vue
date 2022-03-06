@@ -14,7 +14,7 @@
       <v-list-item-group>
         <OverviewNavigation />
 
-        <template v-if="user">
+        <template v-if="permissions">
           <ManagementNavigation />
           <ProjectsNavigation />
         </template>
@@ -45,7 +45,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('auth', ['isAuth', 'user'])
+    ...mapGetters('auth', ['isAuth', 'permissions'])
   },
   watch: {
     isOpen(value) {

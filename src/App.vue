@@ -16,6 +16,7 @@ import TheNavigation from '@/components/navigation/Navigation';
 import {mapActions, mapGetters} from 'vuex';
 import Notifications from './components/Notifications';
 import Confirm from './components/Confirm';
+import Permissions from '@/mixins/Permissions';
 
 export default {
   components: {
@@ -24,6 +25,7 @@ export default {
     Notifications,
     Confirm
   },
+  mixins: [Permissions],
   data() {
     return {
       isLoadingAuth: true
@@ -34,7 +36,13 @@ export default {
   },
   created() {
     if (this.isAuth) {
-      this.getAuth().finally(() => this.isLoadingAuth = false);
+      this.getAuth()
+        .finally(() => {
+          if (this.$route.meta.permission && !this.can(this.$route.meta.permission)) {
+            this.pushRouteTo({ name: 'home' });
+          }
+          this.isLoadingAuth = false;
+        });
     } else {
       this.unsetAuth();
       this.isLoadingAuth = false;
